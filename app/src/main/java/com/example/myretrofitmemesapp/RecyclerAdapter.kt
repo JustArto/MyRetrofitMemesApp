@@ -15,23 +15,10 @@ import com.example.myretrofitmemesapp.model.Meme
 
 
 
-//val callbackInterface: CallbackInterface,
 class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>() {
 
-   /* interface CallbackInterface {  //for passing data in MainActivity.... listi copyin Main
-        fun passResultCallback(message: MutableList<Meme>)
-    }
-
-    lateinit var mListner: onItemClickListener
-    interface onItemClickListener{
-        fun onItemClick(position: Int)
-    }
-    fun setOnItemClickListner(listener: onItemClickListener){
-        mListner = listener
-    }*/
-
-
     var memeItemList : MutableList<Meme> = mutableListOf()
+    private var changedData: MutableList<Meme> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
@@ -40,13 +27,15 @@ class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapt
     }
 
     override fun getItemCount(): Int {
-        return memeItemList.size
+        return changedData.size
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        holder.tvMovieName.text = memeItemList[position].name
-        Glide.with(context).load(memeItemList[position].url)
+        val currentItem = changedData[position]
+
+        holder.tvMovieName.text = currentItem.name
+        Glide.with(context).load(currentItem.url)
                 .apply(RequestOptions().centerCrop())
                 .into(holder.image)
 
@@ -56,34 +45,37 @@ class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapt
             intent.putExtra("Data", "${memeItemList[position].name}")
             intent.putExtra("Data1", "${memeItemList[position].url}")
             holder.itemView.context.startActivity(intent)
-            //callbackInterface.passResultCallback(mutableListOf<Meme>(memeItemList[position]))
         }
-        holder.itemView.setOnClickListener {
-            //Set your codes about intent here
-            val intent = Intent(holder.itemView.context, MemeItemInfo::class.java)
-            intent.putExtra("Meme", "${memeItemList}")
-            holder.itemView.context.startActivity(intent)
-            //callbackInterface.passResultCallback(mutableListOf<Meme>(memeItemList[position]))
-        }
-
     }
 
     @SuppressLint("NotifyDataSetChanged")
     fun setMemeListItems(memeList: List<Meme>){
         memeItemList.clear()
         memeItemList.addAll(memeList)
+        changedData.addAll(memeItemList)
         notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun filterDataBySearch(queryText: String) {
+        changedData.clear()
+        if (queryText.isNotEmpty()) {
+            val filteredData =
+                memeItemList.filter {
+                    it.name.contains(queryText, ignoreCase = true)
+                }
+                    .toMutableList()
+            changedData.addAll(filteredData)
+            notifyDataSetChanged()
+        } else {
+            changedData.addAll(memeItemList)
+            notifyDataSetChanged()
+        }
     }
 
     class MyViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
         val tvMovieName: TextView = itemView!!.findViewById(R.id.title)
         val image: ImageView = itemView!!.findViewById(R.id.image)
-        
 
-     /*   init {
-            itemView!!.setOnClickListener {
-                listener.onItemClick(adapterPosition)
-            }
-        }*/
     }
 }

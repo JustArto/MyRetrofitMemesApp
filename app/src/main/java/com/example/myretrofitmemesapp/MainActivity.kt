@@ -3,6 +3,7 @@ package com.example.myretrofitmemesapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,10 +23,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-   /*     var bundle : Bundle? = intent.extras
-        var message = bundle!!.getString("dd")
-*/
 
         recyclerView = findViewById(R.id.recyclerview)
         recyclerAdapter = RecyclerAdapter(this)
@@ -49,25 +46,23 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-   /*     val msg = intent.getStringExtra("Data")
-        newList = mutableListOf()// adding data from RecyclerAdapter
-        newList.addAll(message)
-
-        var adapter = RecyclerAdapter()
-        recyclerView.adapter = adapter
-        adapter.setOnItemClickListner(object : RecyclerAdapter.onItemClickListener{
-            override fun onItemClick(position: Int) {
-                Toast.makeText(this@MainActivity,"You Clicked", Toast.LENGTH_LONG).show()
-            }
-        })*/
     }
 
-/*    override fun passResultCallback(message: MutableList<Meme>) {
-        var msg = intent.getStringExtra("Data")
-        var msg1 = intent.getStringExtra("Data1")
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        val item = menu?.findItem(R.id.menu_search)
+        val searchView = item?.actionView as androidx.appcompat.widget.SearchView
+        searchView.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
 
-        var myMessage = message
-        newList.addAll(myMessage)
-    }*/
+            override fun onQueryTextSubmit(query: String): Boolean = false
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                recyclerAdapter.filterDataBySearch(newText.trim())
+                return false
+            }
+        })
+        return super.onCreateOptionsMenu(menu)
+    }
 
 }
