@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Arto/AndroidStudioProjects/MyRetrofitMemesApp/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.175" />
         <entry key="..\:/Users/Arto/AndroidStudioProjects/MyRetrofitMemesApp/app/src/main/res/drawable/ic_search.xml" value="0.2846153846153846" />
         <entry key="..\:/Users/Arto/AndroidStudioProjects/MyRetrofitMemesApp/app/src/main/res/layout/activity_main.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Arto/AndroidStudioProjects/MyRetrofitMemesApp/app/src/main/res/layout/activity_meme_item_info.xml" value="0.27291666666666664" />

@@ -12,6 +12,7 @@
         android:layout_height="370dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        tools:background="@color/white"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -23,5 +24,18 @@
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/image"
         tools:layout_editor_absoluteX="-16dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="328dp"
+        android:background="@drawable/ic_baseline_delete_24"
+
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.955"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

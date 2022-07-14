@@ -6,6 +6,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -46,6 +47,10 @@ class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapt
             intent.putExtra("Data1", "${memeItemList[position].url}")
             holder.itemView.context.startActivity(intent)
         }
+        holder.myRemoveButton.setOnClickListener(){
+            myRemoveListItem(position)
+        }
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -72,9 +77,14 @@ class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapt
             notifyDataSetChanged()
         }
     }
+    fun myRemoveListItem(position: Int){
+        changedData.removeAt(position)
+        notifyDataSetChanged()
+    }
 
     class MyViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
         val tvMovieName: TextView = itemView!!.findViewById(R.id.title)
+        val myRemoveButton: Button = itemView!!.findViewById(R.id.button)
         val image: ImageView = itemView!!.findViewById(R.id.image)
 
     }
