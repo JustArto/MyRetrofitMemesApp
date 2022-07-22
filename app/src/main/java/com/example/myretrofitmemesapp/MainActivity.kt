@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
             intentData?.let { data ->
                 val memeName = data.getStringExtra(MEME_NAME)
                 Log.d("MyTagg",memeName.toString())
-                //recyclerAdapter.addMemeItem(memeName as Meme)
+                recyclerAdapter.addMemeItem(memeName)
                 //flowersListViewModel.insertFlower(flowerName, flowerDescription)
             }
         }

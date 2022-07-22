@@ -54,6 +54,7 @@ class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapt
         holder.myRemoveButton.setOnClickListener(){
             myRemoveListItem(position)
         }
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -66,10 +67,7 @@ class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapt
 
     @SuppressLint("NotifyDataSetChanged")
     fun addMemeItem(mItem: String?){
-        //changedData.add(Meme(name = mItem))
-//        changedData.add(element = mItem.name as Meme)
-//        changedData.add(mItem.name)
-//        changedData.add(Meme(name = mItem, height = 0, box_count = 0, id = "", url = "", width = 0))
+        changedData.add(Meme(name = mItem!!, height = 0, box_count = 0, id = "", url = "", width = 0))
         notifyDataSetChanged()
     }
 
