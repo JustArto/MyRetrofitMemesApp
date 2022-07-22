@@ -6,6 +6,8 @@ data class Meme(
     val id: String,
     val name: String,
     val url: String,
-    val width: Int)
+    val width: Int) {
+}
+
 //Items params
 //sranov karam poxancem layouti mechi wrap_content-i poxaren konkret chapery nshanakem => height width

@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyRetrofitMemesApp">
         <activity
+            android:name=".MemeAddItem"
+            android:exported="false" />
+        <activity
             android:name=".MemeItemInfo"
             android:exported="true" />
         <activity

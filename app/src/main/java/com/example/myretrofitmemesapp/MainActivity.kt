@@ -1,14 +1,17 @@
 package com.example.myretrofitmemesapp
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import android.widget.Toast
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myretrofitmemesapp.model.Meme
 import com.example.myretrofitmemesapp.model.Post
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var recyclerView: RecyclerView
     lateinit var recyclerAdapter: RecyclerAdapter
+    lateinit var fabButton: FloatingActionButton
     //lateinit var newList: MutableList<Meme>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +34,10 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = recyclerAdapter
 
+        fabButton = findViewById(R.id.floatingActionButton)
+        fabButton.setOnClickListener(View.OnClickListener {
+            fabOnClick()
+        })
 
         val apiInterface = ApiInterface.create().getMemes()
 
@@ -63,6 +71,23 @@ class MainActivity : AppCompatActivity() {
             }
         })
         return super.onCreateOptionsMenu(menu)
+    }
+    private fun fabOnClick() {
+        val intent = Intent(this, MemeAddItem::class.java)
+        startActivityForResult(intent, 1)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, intentData)
+
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            intentData?.let { data ->
+                val memeName = data.getStringExtra(MEME_NAME)
+                Log.d("MyTagg",memeName.toString())
+                //recyclerAdapter.addMemeItem(memeName as Meme)
+                //flowersListViewModel.insertFlower(flowerName, flowerDescription)
+            }
+        }
     }
 
 }
