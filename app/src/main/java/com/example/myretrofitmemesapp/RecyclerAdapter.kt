@@ -1,6 +1,7 @@
 package com.example.myretrofitmemesapp
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -9,11 +10,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.myretrofitmemesapp.model.Meme
-
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>() {
@@ -47,10 +50,10 @@ class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapt
             intent.putExtra("Data1", "${memeItemList[position].url}")
             holder.itemView.context.startActivity(intent)
         }
+
         holder.myRemoveButton.setOnClickListener(){
             myRemoveListItem(position)
         }
-
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -58,6 +61,15 @@ class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapt
         memeItemList.clear()
         memeItemList.addAll(memeList)
         changedData.addAll(memeItemList)
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun addMemeItem(mItem: String?){
+        //changedData.add(Meme(name = mItem))
+//        changedData.add(element = mItem.name as Meme)
+//        changedData.add(mItem.name)
+//        changedData.add(Meme(name = mItem, height = 0, box_count = 0, id = "", url = "", width = 0))
         notifyDataSetChanged()
     }
 
