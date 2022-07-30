@@ -9,7 +9,6 @@ import android.view.Menu
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myretrofitmemesapp.model.Meme
 import com.example.myretrofitmemesapp.model.Post
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -83,8 +82,11 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             intentData?.let { data ->
                 val memeName = data.getStringExtra(MEME_NAME)
-                Log.d("MyTagg",memeName.toString())
-                recyclerAdapter.addMemeItem(memeName)
+                val memeImage = data.getStringExtra(MEME_IMAGE)
+                Log.d("Taaaaag2",memeName.toString())
+                Log.d("Taaaaag2", memeImage.toString()) //null
+
+                recyclerAdapter.addMemeItem(memeName,memeImage)
                 //flowersListViewModel.insertFlower(flowerName, flowerDescription)
             }
         }
