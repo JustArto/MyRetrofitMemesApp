@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +13,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.myretrofitmemesapp.model.Meme
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import retrofit2.http.Url
 
 
 class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>() {
@@ -46,8 +49,10 @@ class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapt
         holder.itemView.setOnClickListener {
             //Set your codes about intent here
             val intent = Intent(holder.itemView.context, MemeItemInfo::class.java)
-            intent.putExtra("Data", "${memeItemList[position].name}")
-            intent.putExtra("Data1", "${memeItemList[position].url}")
+            intent.putExtra("Data", "${changedData[position].name}")
+            intent.putExtra("Data1", "${changedData[position].url}")
+//            intent.putExtra("Data", "${memeItemList[position].name}")
+//            intent.putExtra("Data1", "${memeItemList[position].url}")
             holder.itemView.context.startActivity(intent)
         }
 
@@ -66,8 +71,9 @@ class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapt
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun addMemeItem(mItem: String?){
-        changedData.add(Meme(name = mItem!!, height = 0, box_count = 0, id = "", url = "", width = 0))
+    fun addMemeItem(mItemName: String?, mItemImage: String?){
+        mItemImage
+        changedData.add(Meme(name = mItemName!!, height = 0, box_count = 0, id = "", url = mItemImage!!.toString(), width = 0))
         notifyDataSetChanged()
     }
 
