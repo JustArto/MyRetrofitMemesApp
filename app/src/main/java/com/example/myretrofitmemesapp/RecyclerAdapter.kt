@@ -73,8 +73,8 @@ class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapt
 
     @SuppressLint("NotifyDataSetChanged")
     fun addMemeItem(mItemName: String?, mItemImage: String?){
-        mItemImage
         changedData.add(Meme(name = mItemName!!, height = 0, box_count = 0, id = "", url = mItemImage!!.toString(), width = 0))
+        memeItemList.add(Meme(name = mItemName!!, height = 0, box_count = 0, id = "", url = mItemImage!!.toString(), width = 0))
         notifyDataSetChanged()
     }
 
