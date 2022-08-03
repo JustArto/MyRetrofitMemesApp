@@ -10,4 +10,4 @@ data class Meme(
 }
 
 //Items params
-//sranov karam poxancem layouti mechi wrap_content-i poxaren konkret chapery nshanakem => height width
+//With this can pass in layout and set instead of wrap_content default size => height width

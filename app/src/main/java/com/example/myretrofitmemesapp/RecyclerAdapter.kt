@@ -47,12 +47,13 @@ class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapt
                 .into(holder.image)
 
         holder.itemView.setOnClickListener {
-            //Set your codes about intent here
+
             val intent = Intent(holder.itemView.context, MemeItemInfo::class.java)
-            intent.putExtra("Data", "${changedData[position].name}")
-            intent.putExtra("Data1", "${changedData[position].url}")
-//            intent.putExtra("Data", "${memeItemList[position].name}")
-//            intent.putExtra("Data1", "${memeItemList[position].url}")
+            intent.putExtra("DataName", "${changedData[position].name}")
+            intent.putExtra("DataImage", "${changedData[position].url}")
+            intent.putExtra("DataBox", "${changedData[position].box_count}")
+            intent.putExtra("DataH", "${changedData[position].height}")
+            intent.putExtra("DataW", "${changedData[position].width}")
             holder.itemView.context.startActivity(intent)
         }
 
