@@ -6,9 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myretrofitmemesapp.databinding.ActivityMainBinding
 import com.example.myretrofitmemesapp.model.Post
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -22,8 +26,11 @@ class MainActivity : AppCompatActivity() {
     lateinit var recyclerAdapter: RecyclerAdapter
     lateinit var fabButton: FloatingActionButton
     //lateinit var newList: MutableList<Meme>
+        //For Navigation menu
+    lateinit var binding : ActivityMainBinding
+    lateinit var toggle: ActionBarDrawerToggle
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+/*    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -53,6 +60,69 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+    }*/
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        recyclerAdapter = RecyclerAdapter(this)
+        //recyclerview.layoutManager = LinearLayoutManager(this)
+        binding.recyclerview.layoutManager = LinearLayoutManager(this)
+        binding.recyclerview.adapter = recyclerAdapter
+
+        fabButton = findViewById(R.id.floatingActionButton)
+        fabButton.setOnClickListener(View.OnClickListener {
+            fabOnClick()
+        })
+
+        val apiInterface = ApiInterface.create().getMemes()
+
+        apiInterface.enqueue( object : Callback<Post>{
+            override fun onResponse(call: Call<Post>?, response: Response<Post>?) {
+                Log.d("MyTag","Success ")
+                if(response!!.body() != null)
+                    recyclerAdapter.setMemeListItems(response.body()?.data?.memes!!)
+                Log.d("MyTag","Success "+response.body().toString())
+            }
+
+            override fun onFailure(call: Call<Post>?, t: Throwable?) {
+                Log.d("MyTag", "Failure "+t.toString())
+            }
+        })
+
+        binding.apply {
+            toggle = ActionBarDrawerToggle(this@MainActivity, drawerLayout, R.string.open, R.string.close)
+            drawerLayout.addDrawerListener(toggle)
+            toggle.syncState()
+
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+            navView.setNavigationItemSelectedListener {
+                when (it.itemId) {
+                    R.id.firstItem -> {
+                        Toast.makeText(this@MainActivity, "First Item Clicked", Toast.LENGTH_SHORT).show()
+                    }
+                    R.id.secondtItem -> {
+                        Toast.makeText(this@MainActivity, "Second Item Clicked", Toast.LENGTH_SHORT).show()
+                    }
+                    R.id.thirdItem -> {
+                        Toast.makeText(this@MainActivity, "third Item Clicked", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                true
+            }
+
+        }
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean { //Nav Draver
+        if (toggle.onOptionsItemSelected(item)){
+            true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
